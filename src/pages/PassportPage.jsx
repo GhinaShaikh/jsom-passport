@@ -1,10 +1,7 @@
 import { useState, useRef } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useAuth } from '../lib/AuthContext'
-import jsomLogo from '../assets/jsom-logo.png'
-import jsomBuilding from '../assets/jsom-building.jpg'
-import { updatePassport, signOut, uploadGalleryPhoto, uploadProfilePhoto } from 
-'../lib/supabase'
+import { updatePassport, signOut, uploadGalleryPhoto, uploadProfilePhoto } from '../lib/supabase'
 
 const UTD = {
   orange: '#C75B12',
@@ -15,8 +12,8 @@ const UTD = {
   gray: '#3A3A3A',
 }
 
-const PAGES = ['cover', 'bio', 'about', 'jsom', 'gallery']
-const PAGE_LABELS = ['Cover', 'Profile', 'About Me', 'Your JSOM', 'Memories']
+const PAGES = ['cover', 'bio', 'about', 'jsom', 'campus', 'gallery']
+const PAGE_LABELS = ['Cover', 'Profile', 'About Me', 'Your JSOM', 'Campus Map', 'Memories']
 
 const jsomFacts = [
   { icon: '🎓', label: '#1 in Texas', detail: 'Ranked #1 public business school in Texas by U.S. News & World Report' },
@@ -301,15 +298,14 @@ export default function PassportPage() {
           {/* COVER */}
           {page === 0 && (
             <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', minHeight: 520, justifyContent: 'space-between' }}>
-              <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 14, paddingTop: 20, width: '100%' }}>
+              <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 6, paddingTop: 10, width: '100%' }}>
                 <div style={{ display: 'flex', gap: 7, marginBottom: 4 }}>
                   {[...Array(5)].map((_, i) => <div key={i} style={{ width: 5, height: 5, background: UTD.orange, borderRadius: '50%', opacity: 0.7 }} />)}
                 </div>
-               	<div style={{ fontFamily: "'Oswald', sans-serif", fontSize: 13, color: UTD.orange, letterSpacing: 4, textAlign: 'center' }}>THE UNIVERSITY OF TEXAS AT DALLAS</div>
- 		 <div style={{ fontFamily: "'Libre Baskerville', serif", fontSize: 16, color: UTD.white, letterSpacing: 1, textAlign: 'center' }}>Naveen Jindal School of Management</div>
+                <div style={{ fontFamily: "'Oswald', sans-serif", fontSize: 13, color: UTD.orange, letterSpacing: 4, textAlign: 'center' }}>THE UNIVERSITY OF TEXAS AT DALLAS</div>
+                <div style={{ fontFamily: "'Libre Baskerville', serif", fontSize: 16, color: UTD.white, letterSpacing: 1, textAlign: 'center' }}>Naveen Jindal School of Management</div>
                 <div style={{ width: 50, height: 1, background: 'rgba(199,91,18,0.5)', marginTop: 6 }} />
                 <div style={{ fontFamily: "'Oswald', sans-serif", fontSize: 20, color: UTD.white, letterSpacing: 5, fontWeight: 600 }}>COMET PASSPORT</div>
-
                 <div style={{ fontFamily: "'Libre Baskerville', serif", fontStyle: 'italic', color: UTD.orangeLight, fontSize: 12 }}>Digital Identity Document</div>
               </div>
               <div style={{ border: '1px solid rgba(199,91,18,0.35)', borderRadius: 8, padding: '16px 22px', textAlign: 'center', width: '82%', background: 'rgba(255,255,255,0.05)' }}>
@@ -383,7 +379,7 @@ export default function PassportPage() {
             <div>
               <div style={{ fontFamily: "'Oswald', sans-serif", color: UTD.orange, fontSize: 10, letterSpacing: 4, marginBottom: 14 }}>YOUR JSOM</div>
               <div style={{ borderRadius: 8, overflow: 'hidden', marginBottom: 16, border: `1px solid ${UTD.orange}22`, height: 130, background: `linear-gradient(135deg, ${UTD.green}33, ${UTD.orange}22)`, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                <img src={jsomBuilding} alt="JSOM Building" style={{ width: '100%', height: 130, objectFit: 'cover', borderRadius: 8 }} />
+                <div style={{ color: 'rgba(255,255,255,0.3)', fontFamily: 'monospace', fontSize: 9, letterSpacing: 2 }}>JSOM BUILDING PHOTO</div>
               </div>
               <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
                 {jsomFacts.map((f, i) => (
@@ -399,8 +395,42 @@ export default function PassportPage() {
             </div>
           )}
 
-          {/* MEMORIES */}
+          {/* CAMPUS MAP */}
           {page === 4 && (
+            <div>
+              <div style={{ fontFamily: "'Oswald', sans-serif", color: UTD.orange, fontSize: 10, letterSpacing: 4, marginBottom: 4 }}>CAMPUS MAP</div>
+              <div style={{ color: `${UTD.gray}88`, fontFamily: "'Libre Baskerville', serif", fontStyle: 'italic', fontSize: 11, marginBottom: 12 }}>
+                The University of Texas at Dallas
+              </div>
+              <div style={{
+                borderRadius: 8, overflow: 'hidden',
+                border: `1px solid ${UTD.orange}33`,
+                boxShadow: `0 4px 20px rgba(0,0,0,0.15)`,
+              }}>
+                <iframe
+                  src="https://map.concept3d.com/?id=1772#!s/"
+                  width="100%"
+                  height="380"
+                  style={{ border: 'none', display: 'block' }}
+                  title="UTD Campus Map"
+                  allowFullScreen
+                />
+              </div>
+              <div style={{
+                marginTop: 10, padding: '8px 12px',
+                background: `${UTD.green}0d`,
+                borderLeft: `3px solid ${UTD.green}`,
+                borderRadius: '0 4px 4px 0',
+              }}>
+                <div style={{ color: UTD.gray, fontFamily: "'Libre Baskerville', serif", fontSize: 10, lineHeight: 1.6 }}>
+                  📍 800 W Campbell Rd, Richardson, TX 75080
+                </div>
+              </div>
+            </div>
+          )}
+
+          {/* MEMORIES */}
+          {page === 5 && (
             <div>
               <div style={{ fontFamily: "'Oswald', sans-serif", color: UTD.orange, fontSize: 10, letterSpacing: 4, marginBottom: 4 }}>MY MEMORIES</div>
               <div style={{ color: `${UTD.gray}88`, fontFamily: "'Libre Baskerville', serif", fontStyle: 'italic', fontSize: 11, marginBottom: 16 }}>
