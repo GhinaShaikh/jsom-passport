@@ -396,22 +396,21 @@ export default function PassportPage() {
             </div>
           )}
 
-          {/* CAMPUS MAP */}
+         {/* CAMPUS MAP */}
           {page === 4 && (
             <div>
               <div style={{ fontFamily: "'Oswald', sans-serif", color: UTD.orange, fontSize: 10, letterSpacing: 4, marginBottom: 4 }}>CAMPUS MAP</div>
               <div style={{ color: `${UTD.gray}88`, fontFamily: "'Libre Baskerville', serif", fontStyle: 'italic', fontSize: 11, marginBottom: 12 }}>
                 The University of Texas at Dallas
               </div>
- 	         <iframe
-                  src="https://map.concept3d.com/?id=1772#!s/"
-                  width="100%"
-                  height="450"
-                  style={{ border: 'none', display: 'block' }}
-                  title="UTD Campus Map"
-                  allowFullScreen
-                />
-              </div>
+              <iframe
+                src="https://map.concept3d.com/?id=1772#!s/"
+                width="100%"
+                height="450"
+                style={{ border: 'none', display: 'block', borderRadius: 8 }}
+                title="UTD Campus Map"
+                allowFullScreen
+              />
               <div style={{
                 marginTop: 10, padding: '8px 12px',
                 background: `${UTD.green}0d`,
