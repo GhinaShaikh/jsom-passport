@@ -1,6 +1,7 @@
 import { useState, useRef } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useAuth } from '../lib/AuthContext'
+import jsomBuilding from '../assets/jsom-building.jpg'
 import { updatePassport, signOut, uploadGalleryPhoto, uploadProfilePhoto } from '../lib/supabase'
 
 const UTD = {
