@@ -402,15 +402,10 @@ export default function PassportPage() {
               <div style={{ color: `${UTD.gray}88`, fontFamily: "'Libre Baskerville', serif", fontStyle: 'italic', fontSize: 11, marginBottom: 12 }}>
                 The University of Texas at Dallas
               </div>
-              <div style={{
-                borderRadius: 8, overflow: 'hidden',
-                border: `1px solid ${UTD.orange}33`,
-                boxShadow: `0 4px 20px rgba(0,0,0,0.15)`,
-              }}>
-                <iframe
+ 	         <iframe
                   src="https://map.concept3d.com/?id=1772#!s/"
                   width="100%"
-                  height="380"
+                  height="450"
                   style={{ border: 'none', display: 'block' }}
                   title="UTD Campus Map"
                   allowFullScreen
