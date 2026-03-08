@@ -382,19 +382,26 @@ export default function PassportPage() {
               <div style={{ borderRadius: 8, overflow: 'hidden', marginBottom: 16, border: `1px solid ${UTD.orange}22`, height: 130, background: `linear-gradient(135deg, ${UTD.green}33, ${UTD.orange}22)`, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                 <img src={jsomBuilding} alt="JSOM Building" style={{ width: '100%', height: 130, objectFit: 'cover', borderRadius: 8 }} />
               </div>
-              <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
-                {jsomFacts.map((f, i) => (
-                  <div key={i} style={{ display: 'flex', gap: 10, alignItems: 'flex-start', padding: '8px 10px', borderRadius: 6, background: i % 2 === 0 ? `${UTD.orange}07` : 'transparent', borderLeft: `2px solid ${i % 2 === 0 ? UTD.orange : UTD.green}55` }}>
-                    <span style={{ fontSize: 16, lineHeight: 1.3, flexShrink: 0 }}>{f.icon}</span>
-                    <div>
-                      <div style={{ color: UTD.orange, fontFamily: "'Oswald', sans-serif", fontSize: 11, letterSpacing: 1, fontWeight: 500 }}>{f.label}</div>
-                      <div style={{ color: UTD.gray, fontFamily: "'Libre Baskerville', serif", fontSize: 10, lineHeight: 1.5, marginTop: 1 }}>{f.detail}</div>
-                    </div>
-                  </div>
+             <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
+                {[
+                  "In 1975, a small School of Management was founded at The University of Texas at Dallas with a simple belief: that business education should prepare leaders for a changing world. Over the decades, that vision grew into what we now know as the Naveen Jindal School of Management—a vibrant, global community of students, faculty, and alumni shaping industries across the world.",
+                  "Through the support and legacy of alumnus Naveen Jindal, the school expanded its reach, its programs, and its impact—growing from a small academic unit into one of the largest business schools in the nation.",
+                  "But the true story of JSOM is not just its growth. It is the people who walked its halls.",
+                  "It is the friendships formed between classes, the mentors who believed in us, the late nights of ambition and uncertainty, and the quiet moments when we realized our futures were beginning to take shape.",
+                  "JSOM is where possibilities turned into paths, where classmates became lifelong friends, and where every Comet found a place to belong.",
+                  "And every reunion reminds us of something special: no matter where life takes us, JSOM will always be home.",
+                ].map((para, i) => (
+                  <p key={i} style={{
+                    margin: 0,
+                    color: i === 2 || i === 5 ? UTD.orange : UTD.gray,
+                    fontFamily: "'Libre Baskerville', serif",
+                    fontStyle: i === 2 || i === 5 ? 'italic' : 'normal',
+                    fontWeight: i === 2 || i === 5 ? 700 : 400,
+                    fontSize: i === 2 || i === 5 ? 12 : 11,
+                    lineHeight: 1.75,
+                  }}>{para}</p>
                 ))}
               </div>
-            </div>
-          )}
 
          {/* CAMPUS MAP */}
           {page === 4 && (
