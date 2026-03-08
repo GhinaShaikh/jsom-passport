@@ -380,7 +380,7 @@ export default function PassportPage() {
             <div>
               <div style={{ fontFamily: "'Oswald', sans-serif", color: UTD.orange, fontSize: 10, letterSpacing: 4, marginBottom: 14 }}>YOUR JSOM</div>
               <div style={{ borderRadius: 8, overflow: 'hidden', marginBottom: 16, border: `1px solid ${UTD.orange}22`, height: 130, background: `linear-gradient(135deg, ${UTD.green}33, ${UTD.orange}22)`, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                <div style={{ color: 'rgba(255,255,255,0.3)', fontFamily: 'monospace', fontSize: 9, letterSpacing: 2 }}>JSOM BUILDING PHOTO</div>
+                <img src={jsomBuilding} alt="JSOM Building" style={{ width: '100%', height: 130, objectFit: 'cover', borderRadius: 8 }} />
               </div>
               <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
                 {jsomFacts.map((f, i) => (
