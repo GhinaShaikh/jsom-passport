@@ -16,20 +16,20 @@ const UTD = {
 const PAGES = ['cover', 'bio', 'about', 'jsom', 'campus', 'gallery']
 const PAGE_LABELS = ['Cover', 'Profile', 'About Me', 'Your JSOM', 'Campus Map', 'Memories']
 
-const jsomFacts = [
-  { icon: '🎓', label: '#1 in Texas', detail: 'Ranked #1 public business school in Texas by U.S. News & World Report' },
-  { icon: '🌍', label: 'Global Network', detail: 'Over 80,000 alumni spanning 100+ countries worldwide' },
-  { icon: '🏢', label: 'Corporate Hub', detail: 'Located in the heart of the Dallas–Fort Worth business corridor' },
-  { icon: '📊', label: 'Top Programs', detail: "Home to one of the nation's leading MBA and MS Finance programs" },
-  { icon: '🤝', label: 'Industry Ties', detail: 'Partnerships with Fortune 500 companies including AT&T, Toyota & Goldman Sachs' },
-  { icon: '⭐', label: 'AACSB Accredited', detail: 'Holds the gold standard of business school accreditation since 1994' },
-]
-
 const aboutFields = [
   { key: 'about_me', label: 'ABOUT ME', placeholder: 'What makes you, you?', rows: 3 },
   { key: 'fun_fact', label: 'FUN FACT', placeholder: 'What makes you fun?', rows: 2 },
   { key: 'utd_memory', label: 'FAVOURITE UTD MEMORY', placeholder: 'A comet memory you just cannot forget!', rows: 2 },
   { key: 'coffee_order', label: 'COFFEE ORDER', placeholder: 'Your coffee order — arguably the most accurate personality test.', rows: 2 },
+]
+
+const jsomStory = [
+  { text: "In 1975, a small School of Management was founded at The University of Texas at Dallas with a simple belief: that business education should prepare leaders for a changing world. Over the decades, that vision grew into what we now know as the Naveen Jindal School of Management—a vibrant, global community of students, faculty, and alumni shaping industries across the world.", highlight: false },
+  { text: "Through the support and legacy of alumnus Naveen Jindal, the school expanded its reach, its programs, and its impact—growing from a small academic unit into one of the largest business schools in the nation.", highlight: false },
+  { text: "But the true story of JSOM is not just its growth. It is the people who walked its halls.", highlight: true },
+  { text: "It is the friendships formed between classes, the mentors who believed in us, the late nights of ambition and uncertainty, and the quiet moments when we realized our futures were beginning to take shape.", highlight: false },
+  { text: "JSOM is where possibilities turned into paths, where classmates became lifelong friends, and where every Comet found a place to belong.", highlight: false },
+  { text: "And every reunion reminds us of something special: no matter where life takes us, JSOM will always be home.", highlight: true },
 ]
 
 function MRZLine({ name }) {
@@ -43,7 +43,6 @@ function MRZLine({ name }) {
   )
 }
 
-// ─── GALLERY PHOTO SLOT ───────────────────────────────────────────────────────
 function PhotoSlot({ index, url, onUpload, uploading }) {
   const inputRef = useRef()
   const cols = [UTD.orange, UTD.green, '#c0392b', '#8e44ad', '#2980b9', UTD.orangeDark]
@@ -75,7 +74,6 @@ function PhotoSlot({ index, url, onUpload, uploading }) {
       onMouseLeave={e => { e.currentTarget.style.transform = 'scale(1)'; e.currentTarget.style.boxShadow = 'none' }}
     >
       <input ref={inputRef} type="file" accept="image/*" style={{ display: 'none' }} onChange={handleFile} />
-
       {uploading ? (
         <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 6 }}>
           <div style={{ width: 24, height: 24, borderRadius: '50%', border: `2px solid ${c}`, borderTopColor: 'transparent', animation: 'spin 0.8s linear infinite' }} />
@@ -84,11 +82,7 @@ function PhotoSlot({ index, url, onUpload, uploading }) {
       ) : url ? (
         <>
           <img src={url} alt="" style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }} />
-          <div className="photo-overlay" style={{
-            position: 'absolute', inset: 0, background: 'rgba(0,0,0,0.45)',
-            display: 'flex', alignItems: 'center', justifyContent: 'center',
-            opacity: 0, transition: 'opacity 0.2s',
-          }}>
+          <div className="photo-overlay" style={{ position: 'absolute', inset: 0, background: 'rgba(0,0,0,0.45)', display: 'flex', alignItems: 'center', justifyContent: 'center', opacity: 0, transition: 'opacity 0.2s' }}>
             <div style={{ color: 'white', fontFamily: 'monospace', fontSize: 9, letterSpacing: 2 }}>✎ CHANGE</div>
           </div>
         </>
@@ -102,7 +96,6 @@ function PhotoSlot({ index, url, onUpload, uploading }) {
   )
 }
 
-// ─── PROFILE PHOTO SLOT ───────────────────────────────────────────────────────
 function ProfilePhotoSlot({ url, onUpload, uploading }) {
   const inputRef = useRef()
 
@@ -130,17 +123,12 @@ function ProfilePhotoSlot({ url, onUpload, uploading }) {
       onMouseLeave={e => e.currentTarget.style.transform = 'scale(1)'}
     >
       <input ref={inputRef} type="file" accept="image/*" style={{ display: 'none' }} onChange={handleFile} />
-
       {uploading ? (
         <div style={{ width: 24, height: 24, borderRadius: '50%', border: `2px solid ${UTD.orange}`, borderTopColor: 'transparent', animation: 'spin 0.8s linear infinite' }} />
       ) : url ? (
         <>
           <img src={url} alt="Profile" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
-          <div className="photo-overlay" style={{
-            position: 'absolute', inset: 0, background: 'rgba(0,0,0,0.4)',
-            display: 'flex', alignItems: 'center', justifyContent: 'center',
-            opacity: 0, transition: 'opacity 0.2s',
-          }}>
+          <div className="photo-overlay" style={{ position: 'absolute', inset: 0, background: 'rgba(0,0,0,0.4)', display: 'flex', alignItems: 'center', justifyContent: 'center', opacity: 0, transition: 'opacity 0.2s' }}>
             <div style={{ color: 'white', fontSize: 8, fontFamily: 'monospace', letterSpacing: 1 }}>✎ CHANGE</div>
           </div>
         </>
@@ -154,7 +142,6 @@ function ProfilePhotoSlot({ url, onUpload, uploading }) {
   )
 }
 
-// ─── MAIN PAGE ────────────────────────────────────────────────────────────────
 export default function PassportPage() {
   const { user, passport, refreshPassport } = useAuth()
   const navigate = useNavigate()
@@ -170,7 +157,6 @@ export default function PassportPage() {
     coffee_order: passport?.coffee_order ?? '',
   })
 
-  // Build gallery map { slotIndex: url } from passport.gallery_photos array
   const [galleryPhotos, setGalleryPhotos] = useState(() => {
     const map = {}
     ;(passport?.gallery_photos ?? []).forEach(p => { map[p.slot] = p.url })
@@ -251,7 +237,6 @@ export default function PassportPage() {
         .flip-prev{animation:flipPrev 0.31s ease-in-out}
         .navbtn:hover{opacity:1!important;background:rgba(199,91,18,0.2)!important}
         .about-row:hover{background:rgba(199,91,18,0.04)!important}
-        .photo-slot-wrap:hover .photo-overlay{opacity:1!important}
         textarea.afield{
           width:100%;box-sizing:border-box;background:transparent;border:none;
           border-bottom:1px dashed ${UTD.orange}77;outline:none;resize:none;
@@ -378,32 +363,27 @@ export default function PassportPage() {
           {/* YOUR JSOM */}
           {page === 3 && (
             <div>
-              <div style={{ fontFamily: "'Oswald', sans-serif", color: UTD.orange, fontSize: 10, letterSpacing: 4, marginBottom: 14 }}>YOUR JSOM</div>
-              <div style={{ borderRadius: 8, overflow: 'hidden', marginBottom: 16, border: `1px solid ${UTD.orange}22`, height: 130, background: `linear-gradient(135deg, ${UTD.green}33, ${UTD.orange}22)`, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                <img src={jsomBuilding} alt="JSOM Building" style={{ width: '100%', height: 130, objectFit: 'cover', borderRadius: 8 }} />
+              <div style={{ fontFamily: "'Oswald', sans-serif", color: UTD.orange, fontSize: 10, letterSpacing: 4, marginBottom: 10 }}>YOUR JSOM</div>
+              <div style={{ borderRadius: 8, overflow: 'hidden', marginBottom: 14, border: `1px solid ${UTD.orange}22`, height: 110 }}>
+                <img src={jsomBuilding} alt="JSOM Building" style={{ width: '100%', height: 110, objectFit: 'cover', display: 'block' }} />
               </div>
-             <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
-                {[
-                  "In 1975, a small School of Management was founded at The University of Texas at Dallas with a simple belief: that business education should prepare leaders for a changing world. Over the decades, that vision grew into what we now know as the Naveen Jindal School of Management—a vibrant, global community of students, faculty, and alumni shaping industries across the world.",
-                  "Through the support and legacy of alumnus Naveen Jindal, the school expanded its reach, its programs, and its impact—growing from a small academic unit into one of the largest business schools in the nation.",
-                  "But the true story of JSOM is not just its growth. It is the people who walked its halls.",
-                  "It is the friendships formed between classes, the mentors who believed in us, the late nights of ambition and uncertainty, and the quiet moments when we realized our futures were beginning to take shape.",
-                  "JSOM is where possibilities turned into paths, where classmates became lifelong friends, and where every Comet found a place to belong.",
-                  "And every reunion reminds us of something special: no matter where life takes us, JSOM will always be home.",
-                ].map((para, i) => (
+              <div style={{ display: 'flex', flexDirection: 'column', gap: 10, overflowY: 'auto', maxHeight: 350 }}>
+                {jsomStory.map((item, i) => (
                   <p key={i} style={{
                     margin: 0,
-                    color: i === 2 || i === 5 ? UTD.orange : UTD.gray,
+                    color: item.highlight ? UTD.orange : UTD.gray,
                     fontFamily: "'Libre Baskerville', serif",
-                    fontStyle: i === 2 || i === 5 ? 'italic' : 'normal',
-                    fontWeight: i === 2 || i === 5 ? 700 : 400,
-                    fontSize: i === 2 || i === 5 ? 12 : 11,
+                    fontStyle: item.highlight ? 'italic' : 'normal',
+                    fontWeight: item.highlight ? 700 : 400,
+                    fontSize: item.highlight ? 12 : 11,
                     lineHeight: 1.75,
-                  }}>{para}</p>
+                  }}>{item.text}</p>
                 ))}
               </div>
+            </div>
+          )}
 
-         {/* CAMPUS MAP */}
+          {/* CAMPUS MAP */}
           {page === 4 && (
             <div>
               <div style={{ fontFamily: "'Oswald', sans-serif", color: UTD.orange, fontSize: 10, letterSpacing: 4, marginBottom: 4 }}>CAMPUS MAP</div>
@@ -418,12 +398,7 @@ export default function PassportPage() {
                 title="UTD Campus Map"
                 allowFullScreen
               />
-              <div style={{
-                marginTop: 10, padding: '8px 12px',
-                background: `${UTD.green}0d`,
-                borderLeft: `3px solid ${UTD.green}`,
-                borderRadius: '0 4px 4px 0',
-              }}>
+              <div style={{ marginTop: 10, padding: '8px 12px', background: `${UTD.green}0d`, borderLeft: `3px solid ${UTD.green}`, borderRadius: '0 4px 4px 0' }}>
                 <div style={{ color: UTD.gray, fontFamily: "'Libre Baskerville', serif", fontSize: 10, lineHeight: 1.6 }}>
                   📍 800 W Campbell Rd, Richardson, TX 75080
                 </div>
