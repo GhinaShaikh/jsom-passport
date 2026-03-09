@@ -24,12 +24,12 @@ const aboutFields = [
 ]
 
 const jsomStory = [
-  { text: "In 1975, a small School of Management was founded at The University of Texas at Dallas with a simple belief: that business education should prepare leaders for a changing world. Over the decades, that vision grew into what we now know as the Naveen Jindal School of Management—a vibrant, global community of students, faculty, and alumni shaping industries across the world.", highlight: false },
-  { text: "Through the support and legacy of alumnus Naveen Jindal, the school expanded its reach, its programs, and its impact—growing from a small academic unit into one of the largest business schools in the nation.", highlight: false },
+  const jsomStory = [
+  { text: "Founded in 1975, the Naveen Jindal School of Management grew from a small academic unit into one of the largest and most respected business schools in the nation.", highlight: false },
   { text: "But the true story of JSOM is not just its growth. It is the people who walked its halls.", highlight: true },
-  { text: "It is the friendships formed between classes, the mentors who believed in us, the late nights of ambition and uncertainty, and the quiet moments when we realized our futures were beginning to take shape.", highlight: false },
-  { text: "JSOM is where possibilities turned into paths, where classmates became lifelong friends, and where every Comet found a place to belong.", highlight: false },
-  { text: "And every reunion reminds us of something special: no matter where life takes us, JSOM will always be home.", highlight: true },
+  { text: "The friendships formed between classes. The mentors who believed in us. The moments when we realized our futures were beginning to take shape.", highlight: false },
+  { text: "JSOM is where every Comet found a place to belong.", highlight: true },
+  { text: "And no matter where life takes us, JSOM will always be home.", highlight: true },
 ]
 
 function MRZLine({ name }) {
