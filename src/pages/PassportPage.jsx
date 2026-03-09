@@ -24,11 +24,12 @@ const aboutFields = [
 ]
 
 const jsomStory = [
-  { text: "Founded in 1975, the Naveen Jindal School of Management grew from a small academic unit into one of the largest and most respected business schools in the nation.", highlight: false },
+  { text: "In 1975, a small School of Management was founded at The University of Texas at Dallas with a simple belief: that business education should prepare leaders for a changing world. Over the decades, that vision grew into what we now know as the Naveen Jindal School of Management—a vibrant, global community of students, faculty, and alumni shaping industries across the world.", highlight: false },
+  { text: "Through the support and legacy of alumnus Naveen Jindal, the school expanded its reach, its programs, and its impact—growing from a small academic unit into one of the largest business schools in the nation.", highlight: false },
   { text: "But the true story of JSOM is not just its growth. It is the people who walked its halls.", highlight: true },
-  { text: "The friendships formed between classes. The mentors who believed in us. The moments when we realized our futures were beginning to take shape.", highlight: false },
-  { text: "JSOM is where every Comet found a place to belong.", highlight: true },
-  { text: "And no matter where life takes us, JSOM will always be home.", highlight: true },
+  { text: "It is the friendships formed between classes, the mentors who believed in us, the late nights of ambition and uncertainty, and the quiet moments when we realized our futures were beginning to take shape.", highlight: false },
+  { text: "JSOM is where possibilities turned into paths, where classmates became lifelong friends, and where every Comet found a place to belong.", highlight: false },
+  { text: "And every reunion reminds us of something special: no matter where life takes us, JSOM will always be home.", highlight: true },
 ]
 
 function MRZLine({ name }) {
@@ -44,6 +45,7 @@ function MRZLine({ name }) {
 
 function PhotoSlot({ index, url, onUpload, uploading }) {
   const inputRef = useRef()
+  const [lightbox, setLightbox] = useState(false)
   const cols = [UTD.orange, UTD.green, '#c0392b', '#8e44ad', '#2980b9', UTD.orangeDark]
   const c = cols[index % cols.length]
 
@@ -56,42 +58,98 @@ function PhotoSlot({ index, url, onUpload, uploading }) {
     e.target.value = ''
   }
 
+  const handleDownload = async (e) => {
+    e.stopPropagation()
+    const a = document.createElement('a')
+    a.href = url
+    a.download = `jsom-memory-${index + 1}.jpg`
+    a.target = '_blank'
+    a.click()
+  }
+
+  const handleShare = async (e) => {
+    e.stopPropagation()
+    try {
+      const res = await fetch(url)
+      const blob = await res.blob()
+      const file = new File([blob], `jsom-memory-${index + 1}.jpg`, { type: blob.type })
+      if (navigator.share && navigator.canShare({ files: [file] })) {
+        await navigator.share({
+          files: [file],
+          title: 'JSOM Reunion 2026',
+          text: '#JSOMReunion2026 #CometPassport #JSOM',
+        })
+      } else {
+        alert('Sharing not supported on this device. Use Save Photo instead!')
+      }
+    } catch (err) {
+      if (err.name !== 'AbortError') alert('Could not share. Try Save Photo instead.')
+    }
+  }
+
   return (
-    <div
-      onClick={() => !uploading && inputRef.current?.click()}
-      style={{
-        background: url ? 'transparent' : `linear-gradient(135deg,${c}18,${c}28)`,
-        border: `1px solid ${c}44`,
-        borderRadius: 5,
-        aspectRatio: '4/3',
-        display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center',
-        cursor: uploading ? 'wait' : 'pointer',
-        position: 'relative', overflow: 'hidden',
-        transition: 'transform 0.2s, box-shadow 0.2s',
-      }}
-      onMouseEnter={e => { if (!uploading) { e.currentTarget.style.transform = 'scale(1.03)'; e.currentTarget.style.boxShadow = `0 8px 20px ${c}33` } }}
-      onMouseLeave={e => { e.currentTarget.style.transform = 'scale(1)'; e.currentTarget.style.boxShadow = 'none' }}
-    >
-      <input ref={inputRef} type="file" accept="image/*" style={{ display: 'none' }} onChange={handleFile} />
-      {uploading ? (
-        <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 6 }}>
-          <div style={{ width: 24, height: 24, borderRadius: '50%', border: `2px solid ${c}`, borderTopColor: 'transparent', animation: 'spin 0.8s linear infinite' }} />
-          <div style={{ color: `${c}99`, fontSize: 8, fontFamily: 'monospace', letterSpacing: 1 }}>UPLOADING…</div>
-        </div>
-      ) : url ? (
-        <>
-          <img src={url} alt="" style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }} />
-          <div className="photo-overlay" style={{ position: 'absolute', inset: 0, background: 'rgba(0,0,0,0.45)', display: 'flex', alignItems: 'center', justifyContent: 'center', opacity: 0, transition: 'opacity 0.2s' }}>
-            <div style={{ color: 'white', fontFamily: 'monospace', fontSize: 9, letterSpacing: 2 }}>✎ CHANGE</div>
+    <>
+      {lightbox && (
+        <div
+          onClick={() => setLightbox(false)}
+          style={{
+            position: 'fixed', inset: 0, zIndex: 1000,
+            background: 'rgba(0,0,0,0.92)',
+            display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center',
+            padding: 20,
+          }}
+        >
+          <img
+            src={url}
+            alt=""
+            onClick={e => e.stopPropagation()}
+            style={{ maxWidth: '100%', maxHeight: '75vh', borderRadius: 8, objectFit: 'contain', boxShadow: '0 20px 60px rgba(0,0,0,0.5)' }}
+          />
+          <div style={{ display: 'flex', gap: 12, marginTop: 20, flexWrap: 'wrap', justifyContent: 'center' }} onClick={e => e.stopPropagation()}>
+            <button onClick={handleShare} style={{ background: UTD.green, color: 'white', border: 'none', borderRadius: 6, padding: '10px 24px', fontFamily: "'Oswald', sans-serif", fontSize: 11, letterSpacing: 3, cursor: 'pointer' }}>↗ SHARE</button>
+            <button onClick={handleDownload} style={{ background: UTD.orange, color: 'white', border: 'none', borderRadius: 6, padding: '10px 24px', fontFamily: "'Oswald', sans-serif", fontSize: 11, letterSpacing: 3, cursor: 'pointer' }}>⬇ SAVE PHOTO</button>
+            <button onClick={() => { setLightbox(false); inputRef.current?.click() }} style={{ background: 'rgba(255,255,255,0.1)', color: 'white', border: '1px solid rgba(255,255,255,0.2)', borderRadius: 6, padding: '10px 24px', fontFamily: "'Oswald', sans-serif", fontSize: 11, letterSpacing: 3, cursor: 'pointer' }}>✎ CHANGE</button>
+            <button onClick={() => setLightbox(false)} style={{ background: 'rgba(255,255,255,0.1)', color: 'white', border: '1px solid rgba(255,255,255,0.2)', borderRadius: 6, padding: '10px 24px', fontFamily: "'Oswald', sans-serif", fontSize: 11, letterSpacing: 3, cursor: 'pointer' }}>✕ CLOSE</button>
           </div>
-        </>
-      ) : (
-        <>
-          <div style={{ fontSize: 24, opacity: 0.45, marginBottom: 4 }}>📷</div>
-          <div style={{ color: `${c}99`, fontSize: 8, fontFamily: 'monospace', letterSpacing: 1 }}>TAP TO ADD</div>
-        </>
+        </div>
       )}
-    </div>
+
+      <div
+        onClick={() => !uploading && (url ? setLightbox(true) : inputRef.current?.click())}
+        style={{
+          background: url ? 'transparent' : `linear-gradient(135deg,${c}18,${c}28)`,
+          border: `1px solid ${c}44`,
+          borderRadius: 5,
+          aspectRatio: '4/3',
+          display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center',
+          cursor: uploading ? 'wait' : 'pointer',
+          position: 'relative', overflow: 'hidden',
+          transition: 'transform 0.2s, box-shadow 0.2s',
+        }}
+        onMouseEnter={e => { if (!uploading) { e.currentTarget.style.transform = 'scale(1.03)'; e.currentTarget.style.boxShadow = `0 8px 20px ${c}33` } }}
+        onMouseLeave={e => { e.currentTarget.style.transform = 'scale(1)'; e.currentTarget.style.boxShadow = 'none' }}
+      >
+        <input ref={inputRef} type="file" accept="image/*" style={{ display: 'none' }} onChange={handleFile} />
+        {uploading ? (
+          <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 6 }}>
+            <div style={{ width: 24, height: 24, borderRadius: '50%', border: `2px solid ${c}`, borderTopColor: 'transparent', animation: 'spin 0.8s linear infinite' }} />
+            <div style={{ color: `${c}99`, fontSize: 8, fontFamily: 'monospace', letterSpacing: 1 }}>UPLOADING…</div>
+          </div>
+        ) : url ? (
+          <>
+            <img src={url} alt="" style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }} />
+            <div className="photo-overlay" style={{ position: 'absolute', inset: 0, background: 'rgba(0,0,0,0.45)', display: 'flex', alignItems: 'center', justifyContent: 'center', opacity: 0, transition: 'opacity 0.2s' }}>
+              <div style={{ color: 'white', fontFamily: 'monospace', fontSize: 9, letterSpacing: 2 }}>🔍 VIEW</div>
+            </div>
+          </>
+        ) : (
+          <>
+            <div style={{ fontSize: 24, opacity: 0.45, marginBottom: 4 }}>📷</div>
+            <div style={{ color: `${c}99`, fontSize: 8, fontFamily: 'monospace', letterSpacing: 1 }}>TAP TO ADD</div>
+          </>
+        )}
+      </div>
+    </>
   )
 }
 
@@ -366,9 +424,7 @@ export default function PassportPage() {
               <div style={{ borderRadius: 8, overflow: 'hidden', marginBottom: 14, border: `1px solid ${UTD.orange}22`, height: 110 }}>
                 <img src={jsomBuilding} alt="JSOM Building" style={{ width: '100%', height: 110, objectFit: 'cover', display: 'block' }} />
               </div>
-	<div style={{ fontFamily: "'Oswald', sans-serif", color: UTD.green, fontSize: 13, letterSpacing: 3, marginBottom: 4, borderLeft: `3px solid ${UTD.orange}`, paddingLeft: 10 }}>Our JSOM</div>
-              
-	<div style={{ display: 'flex', flexDirection: 'column', gap: 10, overflowY: 'auto', maxHeight: 350 }}>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: 10, overflowY: 'auto', maxHeight: 350 }}>
                 {jsomStory.map((item, i) => (
                   <p key={i} style={{
                     margin: 0,
