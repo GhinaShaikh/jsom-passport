@@ -24,7 +24,6 @@ const aboutFields = [
 ]
 
 const jsomStory = [
-  const jsomStory = [
   { text: "Founded in 1975, the Naveen Jindal School of Management grew from a small academic unit into one of the largest and most respected business schools in the nation.", highlight: false },
   { text: "But the true story of JSOM is not just its growth. It is the people who walked its halls.", highlight: true },
   { text: "The friendships formed between classes. The mentors who believed in us. The moments when we realized our futures were beginning to take shape.", highlight: false },
