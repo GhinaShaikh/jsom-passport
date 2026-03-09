@@ -367,7 +367,9 @@ export default function PassportPage() {
               <div style={{ borderRadius: 8, overflow: 'hidden', marginBottom: 14, border: `1px solid ${UTD.orange}22`, height: 110 }}>
                 <img src={jsomBuilding} alt="JSOM Building" style={{ width: '100%', height: 110, objectFit: 'cover', display: 'block' }} />
               </div>
-              <div style={{ display: 'flex', flexDirection: 'column', gap: 10, overflowY: 'auto', maxHeight: 350 }}>
+	<div style={{ fontFamily: "'Oswald', sans-serif", color: UTD.green, fontSize: 13, letterSpacing: 3, marginBottom: 4, borderLeft: `3px solid ${UTD.orange}`, paddingLeft: 10 }}>Our JSOM</div>
+              
+	<div style={{ display: 'flex', flexDirection: 'column', gap: 10, overflowY: 'auto', maxHeight: 350 }}>
                 {jsomStory.map((item, i) => (
                   <p key={i} style={{
                     margin: 0,
